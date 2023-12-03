@@ -1,0 +1,36 @@
+{% extends "accounts/base.html" %}
+{% block title %}Sign In{% endblock title %}
+{% block content %}
+<div class="bg-grey-lighter min-h-screen flex flex-col">
+    <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+        <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+            <h1 class="mb-8 text-3xl text-center text-black">Sign In</h1>
+            <form method="POST" action="?">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <caption class="error text-rose-500	">Your username and password didn't match. Please try again.</caption>
+                {% endif %}
+                {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}" />
+                {% endif %}
+                {% for field in form %}
+                    {{ field.errors }}
+                    {{ field }}
+                {% endfor %}
+                <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</button>
+            </form>
+        </div>
+        <div class="text-grey-dark mt-6 text-white">
+            <a class="no-underline border-b border-blue text-blue" href="{% url 'password_reset' %}">
+            Forgot Password
+        </a>.
+        </div>
+        <div class="mt-6 text-white">
+            Don't have an account?
+            <a class="no-underline border-b border-blue text-blue" href="{% url 'signup' %}">
+            SignUp
+        </a>.
+        </div>
+    </div>
+</div>
+{% endblock content %}
